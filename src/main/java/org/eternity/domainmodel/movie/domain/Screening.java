@@ -1,10 +1,12 @@
 package org.eternity.domainmodel.movie.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.eternity.domainmodel.generic.Money;
 
 import java.time.LocalDateTime;
 
@@ -18,17 +20,8 @@ public class Screening {
     private int sequence;
     private LocalDateTime screeningTime;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JoinColumn(name= "MOVIE_IE")
-    private Movie movie;
-
-    public Screening(Movie movie, int sequence, LocalDateTime screeningTime) {
-        this.movie = movie;
+    public Screening(int sequence, LocalDateTime screeningTime) {
         this.sequence = sequence;
         this.screeningTime = screeningTime;
-    }
-
-    public Money getFixedFee() {
-        return movie.getFee();
     }
 }

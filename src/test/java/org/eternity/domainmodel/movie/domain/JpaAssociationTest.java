@@ -14,25 +14,12 @@ public class JpaAssociationTest {
 	private EntityManager em;
 
 	@Test
-	public void persist() {
+	public void persist_and_update() {
 		Movie movie = new Movie("한산", 120, Money.wons(10000));
-		Screening screening = new Screening(movie, 1, LocalDateTime.of(2024, 12, 9, 9, 0));
+		movie.addScreening(new Screening(1, LocalDateTime.of(2024, 12, 9, 9, 0)));
+		movie.addScreening(new Screening(2, LocalDateTime.of(2024, 12, 9, 11, 0)));
 
-		em.persist(screening);
-		em.flush();
-	}
-
-	@Test
-	public void remove() {
-		Movie movie = new Movie("한산", 120, Money.wons(10000));
-		Screening screening = new Screening(movie, 1, LocalDateTime.of(2024, 12, 9, 9, 0));
-
-		em.persist(screening);
-		em.flush();
-
-		Screening loadedScreening = em.find(Screening.class, screening.getId());
-
-		em.remove(loadedScreening);
+		em.persist(movie);
 		em.flush();
 	}
 }
